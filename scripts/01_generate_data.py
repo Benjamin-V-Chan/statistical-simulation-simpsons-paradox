@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-def generate_simpsons_data(num_groups, samples_per_group, group_effects):
+def generate_simpsons_data(samples_per_group, group_effects):
     data = []
     for group_id, (slope, intercept) in enumerate(group_effects):
         x = np.random.uniform(0, 100, samples_per_group)
@@ -15,8 +15,7 @@ def generate_simpsons_data(num_groups, samples_per_group, group_effects):
     return pd.concat(data, ignore_index=True)
 
 if __name__ == "__main__":
-    num_groups = 3
     samples_per_group = 100
     group_effects = [(0.5, 10), (-0.3, 20), (0.2, -5)]
-    df = generate_simpsons_data(num_groups, samples_per_group, group_effects)
+    df = generate_simpsons_data(samples_per_group, group_effects)
     df.to_csv("outputs/simpsons_data.csv", index=False)
