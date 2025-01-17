@@ -1,22 +1,22 @@
-# Import necessary libraries
 import numpy as np
 import pandas as pd
 
-# Define a function to generate synthetic data
-# Parameters: num_groups (int), samples_per_group (int), group_effects (list of tuples)
-# Returns: Pandas DataFrame with columns ['Group', 'X', 'Y']
 def generate_simpsons_data(num_groups, samples_per_group, group_effects):
-    # Create an empty list to store data
-    # Loop through each group
-        # Generate independent variable X (random uniform values)
-        # Generate dependent variable Y based on group-specific relationship
-        # Combine X and Y into a group DataFrame
-        # Append group data to the main list
-    # Concatenate all group DataFrames
-    # Return the final DataFrame
+    data = []
+    for group_id, (slope, intercept) in enumerate(group_effects):
+        x = np.random.uniform(0, 100, samples_per_group)
+        y = slope * x + intercept + np.random.normal(0, 10, samples_per_group)
+        group_data = pd.DataFrame({
+            "Group": [group_id + 1] * samples_per_group,
+            "X": x,
+            "Y": y
+        })
+        data.append(group_data)
+    return pd.concat(data, ignore_index=True)
 
-# Main execution block
 if __name__ == "__main__":
-    # Set parameters for the data generation
-    # Call generate_simpsons_data and save the dataset
-    # Write dataset to CSV in the outputs/ folder
+    num_groups = 3
+    samples_per_group = 100
+    group_effects = [(0.5, 10), (-0.3, 20), (0.2, -5)]
+    df = generate_simpsons_data(num_groups, samples_per_group, group_effects)
+    df.to_csv("outputs/simpsons_data.csv", index=False)
